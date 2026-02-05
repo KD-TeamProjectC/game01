@@ -19,6 +19,9 @@ const STATES = {
 // 文字列データ
 const words = [
     { text: "ぬるぽ", isCorrect: true },
+    { text: "ぬるぽ", isCorrect: true },
+    { text: "ぬるぽ", isCorrect: true },
+    { text: "ぬるぽ", isCorrect: true },
     { text: "NullPointerException", isCorrect: true },
     { text: "NumberFormatException", isCorrect: false },
     { text: "いろはにほへとちりぬるぽ", isCorrect: true },
