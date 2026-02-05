@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // キーボードサポート（スペースキーでスタート/クリック）
     document.addEventListener('keydown', (e) => {
-        if (e.code === 'Space') {
+        if (e.code === 'Space' || e.key === 'Enter') {
             e.preventDefault();
             if (state === STATES.IDLE || state === STATES.RESULT) {
                 startGame();
