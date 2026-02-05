@@ -42,6 +42,7 @@ const STATES = {
 const words = [
     { text: "ぬるぽ", isCorrect: true },
     { text: "NullPointerException", isCorrect: true },
+    { text: "NumberFormatException", isCorrect: false },
     { text: "いろはにほへとちりぬるぽ", isCorrect: true },
     { text: "ぬろぽ", isCorrect: false },
     { text: "ぬかぽコォ", isCorrect: false },
@@ -49,7 +50,10 @@ const words = [
     { text: "nullpo", isCorrect: true },
     { text: "ヌルポ", isCorrect: true },
     { text: "ぬるぽい", isCorrect: true },
-    { text: "ぬるぼ", isCorrect: false }
+    { text: "ぬるぼ", isCorrect: false },
+    { text: "ぬるぽっぽ", isCorrect: true },
+    { text: "ぬるま湯", isCorrect: false }
+    
 ];
 
 // ゲーム変数
