@@ -7,6 +7,20 @@ const ASCII_ART = {
 　　　　（_＿_）
 
 　　　　待機中...`,
+    
+    nullpo: `　　　　　∧_∧
+　　　　（　・∀・）
+　　　　（　　　　）
+　　　　｜｜｜
+　　　　（_＿_）
+
+　　　　ぬるぽ！`,
+    
+    failure: `　　　　　∧_∧
+　　　　（；´Д｀）
+　　　　（　　　　）　失敗...
+　　　　｜｜｜
+　　　　（_＿_）`
 };
 // ゲーム状態定数
 const STATES = {
@@ -243,19 +257,16 @@ function showRandomNurupoGif() {
     
     // 画像読み込みエラー時のフォールバック
     img.onerror = function() {
-        // GIFファイルが見つからない場合、アニメーション付きAAを表示
+        // GIFファイルが見つからない場合、「ガッ！」テキストを表示
         displayArea.innerHTML = '';
-        const aaDiv = document.createElement('div');
-        aaDiv.innerHTML = ASCII_ART.gat.replace(/\n/g, '<br>');
-        aaDiv.style.fontFamily = "'MS Gothic', 'Courier New', monospace";
-        aaDiv.style.whiteSpace = 'pre';
+        const textDiv = document.createElement('div');
+        textDiv.textContent = 'ガッ！';
+        textDiv.style.fontFamily = "'MS Gothic', 'Courier New', monospace";
+        textDiv.style.fontSize = '3rem';
+        textDiv.style.fontWeight = 'bold';
+        textDiv.style.color = '#ff0000';
         
-        // ランダムなアニメーション効果
-        const animations = ['shake', 'bounce', 'flash', 'swing'];
-        const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
-        aaDiv.style.animation = `${randomAnimation} 0.8s ease-in-out`;
-        
-        displayArea.appendChild(aaDiv);
+        displayArea.appendChild(textDiv);
     };
     
     displayArea.appendChild(img);
