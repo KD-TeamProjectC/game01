@@ -7,28 +7,6 @@ const ASCII_ART = {
 　　　　（_＿_）
 
 　　　　待機中...`,
-    
-    nullpo: `　　　　　∧_∧
-　　　　（　´∀｀）
-　　　　（　　　　）　ぬるぽ
-　　　　｜｜｜
-　　　　（_＿_）`,
-    
-    gat: `　　　　　∧_∧
-　　　　（　　　　）
-　　　　（　つ　⌒ヽ　　　∧_∧
-　　　　｜　 ＼　　⌒）　（　　　）
-　　　　｜　　 ＼/　　　（　　　　）　ガッ
-　　　　｜　　　 ）　　　 ｜　｜　｜
-　　　　｜　　 /　　　　 （_＿_）
-　　　　｜　 /
-　　　　（_ノ`,
-    
-    failure: `　　　　　∧_∧
-　　　　（；´Д｀）
-　　　　（　　　　）　失敗...
-　　　　｜｜｜
-　　　　（_＿_）`
 };
 // ゲーム状態定数
 const STATES = {
@@ -44,6 +22,7 @@ const words = [
     { text: "NullPointerException", isCorrect: true },
     { text: "NumberFormatException", isCorrect: false },
     { text: "いろはにほへとちりぬるぽ", isCorrect: true },
+    { text: "いろはにほへとちりぬるを", isCorrect: false },
     { text: "ぬろぽ", isCorrect: false },
     { text: "ぬかぽコォ", isCorrect: false },
     { text: "ぬるほ", isCorrect: false },
@@ -61,6 +40,9 @@ let state = STATES.IDLE;
 let currentWord = null;
 let showTime = 0;
 let timerId = null;
+let lastKeyPressTime = 0;
+let keyPressed = false;
+const KEY_COOLDOWN = 500; // 500ms のクールダウン
 
 // DOM要素
 let displayArea, resultArea, startButton;
@@ -84,15 +66,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初期化
     resetDisplay();
     
-    // キーボードサポート（スペースキーでスタート/クリック）
+    // キーボードサポート（スペースキーとエンターキーでスタート/クリック）
     document.addEventListener('keydown', (e) => {
+        // 長押し防止：既にキーが押されている場合は無視
+        if (keyPressed) {
+            return;
+        }
+        
         if (e.code === 'Space' || e.key === 'Enter') {
             e.preventDefault();
+            
+            // クールダウン時間チェック
+            const currentTime = Date.now();
+            if (currentTime - lastKeyPressTime < KEY_COOLDOWN) {
+                return;
+            }
+            
+            keyPressed = true;
+            lastKeyPressTime = currentTime;
+            
             if (state === STATES.IDLE || state === STATES.RESULT) {
                 startGame();
             } else if (state === STATES.SHOWING || state === STATES.WAITING) {
                 handleClick();
             }
+        }
+    });
+    
+    // キーが離されたときにフラグをリセット
+    document.addEventListener('keyup', (e) => {
+        if (e.code === 'Space' || e.key === 'Enter') {
+            keyPressed = false;
         }
     });
 });
